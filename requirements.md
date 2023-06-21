@@ -24,15 +24,27 @@
 ### /get
 
 - `/cafes?location=location`
-  - name Name of the cafe
-  - description A short description of the cafe
-  - employees Number of the employees. integer
-    logo (optional) Logo of the café. This will be used to display a logo image on the front-end.
-    location Location of the cafe
-  - id UUID
+
+> The response of this endpoint should be the below and sorted by the highest number of employees first. If a valid location is provided, it will filter the list to return only cafes that is within the area. If an invalid location is provided, it should return an empty list. If no location is provided, it should list down all cafes
+
+- name Name of the cafe
+- description A short description of the cafe
+- employees Number of the employees. integer
+  logo (optional) Logo of the café. This will be used to display a logo image on the front-end.
+  location Location of the cafe. should return all cafes if location is not provided
+- id UUID
+
 - `/employees?cafe=cafe`
-  -id Unique employee identifier in the format ‘UIXXXXXXX’ where the X is replaced with alpha numeric - Name of the employee - Email address of the employee. - Phone number of the employee. - Number of days the employee worked It must be an integer and is derived from the current date minus the start
-  date of the employee in the cafe - Café’s name that the employee is under [leave blank if not assigned yet]
+
+> The response of this endpoint should be the below and sorted by the highest number of days worked. It should list all the employees.
+
+- id Unique employee identifier in the format ‘UIXXXXXXX’ where the X is replaced with alpha numeric
+- Name of the employee
+- Email address of the employee.
+- Phone number of the employee.
+- Number of days the employee worked It must be an integer and is derived from the current date minus the start
+  date of the employee in the cafe
+- Café’s name that the employee is under [leave blank if not assigned yet]
 
 ### /post
 
