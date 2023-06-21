@@ -8,16 +8,18 @@ db();
 app.use("/api", router);
 
 router
-  .get("/cafes", (req, res) => {})
-  .post("/cafes", (req, res) => {})
-  .put("/cafes", (req, res) => {})
-  .delete("/cafes", (req, res) => {});
+  .get("/cafe", (req, res) => {})
+  .post("/cafe", (req, res) => {
+    console.log(req.body);
+  })
+  .put("/cafe", (req, res) => {})
+  .delete("/cafe", (req, res) => {});
 
 router
-  .get("/employees", async (req, res) => {})
-  .post("/employees", (req, res) => {})
-  .put("/employees", (req, res) => {})
-  .delete("/employees", (req, res) => {});
+  .get("/employee", async (req, res) => {})
+  .post("/employee", (req, res) => {})
+  .put("/employee", (req, res) => {})
+  .delete("/employee", (req, res) => {});
 
 app.listen(port, () => {
   console.log(`App started on PORT ${port}`);
