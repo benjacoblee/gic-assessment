@@ -1,10 +1,8 @@
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const validator = require("validator");
-const {
-  VALID_STARTING_PHONE_NUMBERS,
-  PHONE_NUMBER_LENGTH
-} = require("../constants/index");
+const { VALID_EMPLOYEE_GENDERS } = require("../constants/index");
+const { isValidPhoneNumber } = require("../validators");
 
 const employeeSchema = new Schema({
   _id: {
@@ -19,28 +17,20 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
     validate: {
-      validator: (val) => {
-        return validator.isEmail(val);
-      }
+      validator: (val) => validator.isEmail(val)
     }
   },
   phone_number: {
     type: String,
     required: true,
     validate: {
-      validator: (val) => {
-        const firstChar = val[0];
-        return (
-          VALID_STARTING_PHONE_NUMBERS.includes(firstChar) &&
-          val.length === PHONE_NUMBER_LENGTH
-        );
-      }
+      validator: (val) => isValidPhoneNumber(val)
     }
   },
   gender: {
     type: String,
     required: true,
-    enum: ["Male", "Female"]
+    enum: VALID_EMPLOYEE_GENDERS
   },
   cafe: {
     type: String,

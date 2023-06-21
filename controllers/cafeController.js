@@ -38,7 +38,6 @@ const createCafe = async (req, res) => {
 };
 
 const updateCafe = async (req, res) => {
-  // TODO: valaidate fields
   const { _id, name, description, location } = req.body;
 
   try {

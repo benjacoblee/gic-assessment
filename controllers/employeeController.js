@@ -1,6 +1,8 @@
+const validator = require("validator");
 const Employee = require("../models/employee");
 const Cafe = require("../models/cafe");
 const { createUID, getEmployeesByDaysWorked } = require("../utils/employee");
+const { isValidPhoneNumber, isValidGender } = require("../validators");
 
 const getEmployees = async (req, res) => {
   const { cafe: cafeId } = req.query;
@@ -46,7 +48,6 @@ const createEmployee = async (req, res) => {
 };
 
 const updateEmployee = async (req, res) => {
-  // TODO: validate fields
   const {
     _id: employeeId,
     name,
@@ -56,8 +57,32 @@ const updateEmployee = async (req, res) => {
     cafe: cafeId
   } = req.body;
   const employee = await Employee.findOne({ _id: employeeId });
+  const errors = [];
+
+  if (email_address && !validator.isEmail(email_address)) {
+    errors.push({
+      field: "email",
+      message: "Please provide a valid email address"
+    });
+  }
+  if (phone_number && !isValidPhoneNumber(phone_number)) {
+    errors.push({
+      field: "phone_number",
+      message: "Please provide a valid phone number"
+    });
+  }
+  if (gender && !isValidGender(gender)) {
+    errors.push({
+      field: "gender",
+      message: "Please provide a valid gender"
+    });
+  }
 
   try {
+    if (errors.length) {
+      throw new Error("An error occurred");
+    }
+
     const oldCafe = await Cafe.findOne({ _id: employee.cafe });
 
     if (cafeId && oldCafe && cafeId !== oldCafe._id) {
@@ -72,7 +97,7 @@ const updateEmployee = async (req, res) => {
         await oldCafe.save();
         await Employee.findOneAndUpdate(
           { _id: employeeId },
-          { cafe: newCafe._id }
+          { cafe: newCafe._id, start_date: new Date() }
         );
       }
     }
@@ -91,7 +116,7 @@ const updateEmployee = async (req, res) => {
     return res.status(200).json(updatedEmployee);
   } catch (err) {
     console.log(err);
-    return res.status(500).json({ error: "An error occurred" });
+    return res.status(500).json({ error: err.message, errors });
   }
 };
 
