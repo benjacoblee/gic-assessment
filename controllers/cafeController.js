@@ -7,7 +7,7 @@ const getCafes = async (req, res) => {
 
   try {
     if (!location) {
-      const cafes = await Cafe.find().lean();
+      const cafes = await Cafe.find({}).lean();
       return res.status(200).json(mapCafeEmployeesToNum(cafes));
     }
 
