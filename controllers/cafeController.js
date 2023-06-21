@@ -36,8 +36,20 @@ const createCafe = async (req, res) => {
   }
 };
 
-const updateCafe = (req, res) => {
-  // TODO: logic to update a cafe
+const updateCafe = async (req, res) => {
+  const { _id, name, description, location } = req.body;
+
+  try {
+    const cafe = await Cafe.findOneAndUpdate(
+      { _id },
+      { name, description, location },
+      { new: true }
+    );
+    return res.status(200).json(cafe);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "An error occurred" });
+  }
 };
 
 const deleteCafe = (req, res) => {
