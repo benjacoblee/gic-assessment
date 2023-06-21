@@ -1,5 +1,6 @@
 const { nanoid } = require("nanoid");
 const Cafe = require("../models/cafe");
+const Employee = require("../models/employee");
 const { mapCafeEmployeesToNum } = require("../utils/cafe");
 
 const getCafes = async (req, res) => {
@@ -52,8 +53,17 @@ const updateCafe = async (req, res) => {
   }
 };
 
-const deleteCafe = (req, res) => {
-  // TODO: logic to delete a cafe
+const deleteCafe = async (req, res) => {
+  const { _id } = req.body;
+
+  try {
+    await Cafe.findByIdAndDelete({ _id });
+    await Employee.deleteMany({ cafe: _id });
+    return res.status(204).json({});
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ error: "An error occurred" });
+  }
 };
 
 module.exports = {
