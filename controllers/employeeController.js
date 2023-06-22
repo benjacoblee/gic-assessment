@@ -84,17 +84,26 @@ const updateEmployee = async (req, res) => {
     }
 
     const oldCafe = await Cafe.findOne({ _id: employee.cafe });
+    const newCafe = await Cafe.findOne({ _id: cafeId });
+    const isAssignedCafe = !!oldCafe;
+    const newCafeExists = !!newCafe;
 
-    if (cafeId && oldCafe && cafeId !== oldCafe._id) {
-      oldCafe.employees = oldCafe.employees.filter(
-        (employee) => employee !== employeeId
-      );
-      const newCafe = await Cafe.findOne({ _id: cafeId });
+    if (cafeId) {
+      if (isAssignedCafe && newCafeExists) {
+        oldCafe.employees = oldCafe.employees.filter(
+          (employee) => employee !== employeeId
+        );
+        newCafe.employees.push(employeeId);
 
-      if (newCafe) {
+        await oldCafe.save();
+        await newCafe.save();
+        await Employee.findOneAndUpdate(
+          { _id: employeeId },
+          { cafe: newCafe._id, start_date: new Date() }
+        );
+      } else if (newCafeExists) {
         newCafe.employees.push(employeeId);
         await newCafe.save();
-        await oldCafe.save();
         await Employee.findOneAndUpdate(
           { _id: employeeId },
           { cafe: newCafe._id, start_date: new Date() }
