@@ -21,13 +21,13 @@ const getEmployeesByDaysWorked = (employees) =>
         const differenceInDays = Math.round(
           Math.abs(differenceInTime / oneDay)
         );
-        employee.daysWorked = differenceInDays;
+        employee.days_worked = differenceInDays;
       } else {
-        employee.daysWorked = 0;
+        employee.days_worked = 0;
       }
 
       return employee;
     })
-    .sort((a, b) => b.daysWorked - a.daysWorked);
+    .sort((a, b) => b.days_worked - a.days_worked);
 
 module.exports = { createUID, getEmployeesByDaysWorked };
