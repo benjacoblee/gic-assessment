@@ -9,11 +9,13 @@ const getEmployees = async (req, res) => {
 
   try {
     if (cafeId) {
-      const employees = await Employee.find({ cafe: cafeId }).lean();
+      const employees = await Employee.find({ cafe: cafeId })
+        .populate("cafe", "name")
+        .lean();
       return res.status(200).json(getEmployeesByDaysWorked(employees));
     }
 
-    const employees = await Employee.find({}).lean();
+    const employees = await Employee.find({}).populate("cafe", "name").lean();
     return res.status(200).json(getEmployeesByDaysWorked(employees));
   } catch (err) {
     console.log(err);

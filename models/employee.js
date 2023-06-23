@@ -34,7 +34,7 @@ const employeeSchema = new Schema({
   },
   cafe: {
     type: String,
-    ref: "cafe"
+    ref: "Cafe"
   },
   start_date: {
     type: Date
