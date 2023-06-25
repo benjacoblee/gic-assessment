@@ -1,16 +1,31 @@
-# Readme
+# GIC Assessment
 
-### Running the project
+### Description
 
-This project uses `Node.js` version `16`
+- An app for cafe & employee management
 
-To run:
+### Technologies Used
 
-- `npm install`
-- MongoDB must be up and running on your computer
-- To seed the data, import the function into `./index.js`:
+#### Server
 
-```
+- ExpressJS
+- NodeJS
+- MongoDB + Mongoose
+
+### Installation and Usage
+
+> This project uses `Node.js` version `16`
+
+- Clone the repository
+- Navigate to the repository
+- Ensure `node_modules` are installed with `npm i`
+
+  - Other requirements:
+
+    - `mongodb` must be running on your machine
+    - Run `seed()` to initialize the project with some data
+
+    ```
     const { seed } = require("./seed");
 
     mongoose.connect("mongodb://127.0.0.1:27017/app").then(
@@ -20,4 +35,6 @@ To run:
         },
         (err) => console.log(err)
     );
-```
+    ```
+
+- Then, run `npm start`
