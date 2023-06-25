@@ -3,15 +3,8 @@ const { createUID } = require("../utils/employee");
 module.exports = [
   {
     _id: createUID(),
-    name: "Ben",
+    name: "Benjamin",
     email_address: "benn@omg.lol",
-    phone_number: "98765432",
-    gender: "Male"
-  },
-  {
-    _id: createUID(),
-    name: "Bryan",
-    email_address: "bryan@omg.lol",
     phone_number: "98765432",
     gender: "Male"
   },
@@ -24,13 +17,6 @@ module.exports = [
   },
   {
     _id: createUID(),
-    name: "Gina",
-    email_address: "gina@omg.lol",
-    phone_number: "98765432",
-    gender: "Female"
-  },
-  {
-    _id: createUID(),
     name: "Germaine",
     email_address: "germs@omg.lol",
     phone_number: "98765432",
@@ -38,17 +24,10 @@ module.exports = [
   },
   {
     _id: createUID(),
-    name: "David",
-    email_address: "david@omg.lol",
+    name: "Andrew",
+    email_address: "andrew@omg.lol",
     phone_number: "98765432",
     gender: "Male"
-  },
-  {
-    _id: createUID(),
-    name: "Trish",
-    email_address: "Trish@omg.lol",
-    phone_number: "98765432",
-    gender: "Female"
   },
   {
     _id: createUID(),
@@ -60,8 +39,22 @@ module.exports = [
   {
     _id: createUID(),
     name: "Bridget",
-    email_address: "Bridget@omg.lol",
+    email_address: "bridget@omg.lol",
     phone_number: "98765432",
     gender: "Female"
+  },
+  {
+    _id: createUID(),
+    name: "Jonathan",
+    email_address: "jonathan@omg.lol",
+    phone_number: "98765432",
+    gender: "Male"
+  },
+  {
+    _id: createUID(),
+    name: "Joshua",
+    email_address: "joshua@omg.lol",
+    phone_number: "98765432",
+    gender: "Male"
   }
 ];
