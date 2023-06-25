@@ -5,11 +5,11 @@ const { createUID, getEmployeesByDaysWorked } = require("../utils/employee");
 const { isValidPhoneNumber, isValidGender } = require("../validators");
 
 const getEmployees = async (req, res) => {
-  const { cafe: cafeId } = req.query;
+  const { cafe: cafe_id } = req.query;
 
   try {
-    if (cafeId) {
-      const employees = await Employee.find({ cafe: cafeId })
+    if (cafe_id) {
+      const employees = await Employee.find({ cafe: cafe_id })
         .populate("cafe", "name")
         .lean();
       return res.status(200).json(getEmployeesByDaysWorked(employees));
@@ -56,7 +56,7 @@ const updateEmployee = async (req, res) => {
     email_address,
     phone_number,
     gender,
-    cafe: cafeId
+    cafe_id
   } = req.body;
   const employee = await Employee.findOne({ _id: employeeId });
   const errors = [];
@@ -86,12 +86,13 @@ const updateEmployee = async (req, res) => {
     }
 
     const oldCafe = await Cafe.findOne({ _id: employee.cafe });
-    const newCafe = await Cafe.findOne({ _id: cafeId });
+    const newCafe = await Cafe.findOne({ _id: cafe_id });
+
     const isAssignedCafe = !!oldCafe;
     const newCafeExists = !!newCafe;
 
-    if (cafeId) {
-      if (isAssignedCafe && newCafeExists) {
+    if (cafe_id) {
+      if (isAssignedCafe && newCafeExists && oldCafe._id !== newCafe._id) {
         oldCafe.employees = oldCafe.employees.filter(
           (employee) => employee !== employeeId
         );
@@ -103,7 +104,7 @@ const updateEmployee = async (req, res) => {
           { _id: employeeId },
           { cafe: newCafe._id, start_date: new Date() }
         );
-      } else if (newCafeExists) {
+      } else if (!oldCafe && newCafeExists) {
         newCafe.employees.push(employeeId);
         await newCafe.save();
         await Employee.findOneAndUpdate(
