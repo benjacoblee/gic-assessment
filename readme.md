@@ -25,7 +25,7 @@
     - `mongodb` must be running on your machine
     - Run `seed()` to initialize the project with some data
 
-    ```
+```
     const { seed } = require("./seed");
 
     mongoose.connect("mongodb://127.0.0.1:27017/app").then(
@@ -35,6 +35,6 @@
         },
         (err) => console.log(err)
     );
-    ```
+```
 
 - Then, run `npm start`
