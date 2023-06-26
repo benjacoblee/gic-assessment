@@ -38,3 +38,4 @@
 ```
 
 - Then, run `npm start`
+- For logo upload to work, you will need the appropriate environment variables. Run `cp .env.example .env` and add your environment variables
