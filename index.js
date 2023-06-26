@@ -5,6 +5,8 @@ const app = express();
 const port = 3000;
 const router = express.Router();
 const mongoose = require("mongoose");
+const multer = require("multer");
+const upload = multer();
 
 const cafeController = require("./controllers/cafeController");
 const employeeController = require("./controllers/employeeController");
@@ -21,8 +23,8 @@ app.use("/api", router); // prepend all routes with "/api"
 
 router
   .get("/cafes", cafeController.getCafes)
-  .post("/cafe", cafeController.createCafe)
-  .put("/cafe", cafeController.updateCafe)
+  .post("/cafe", upload.any(), cafeController.createCafe)
+  .put("/cafe", upload.any(), cafeController.updateCafe)
   .delete("/cafe", cafeController.deleteCafe);
 
 router

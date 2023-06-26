@@ -22,7 +22,10 @@ const cafeSchema = new Schema({
       type: String,
       ref: "Employee"
     }
-  ]
+  ],
+  logoUrl: {
+    type: String
+  }
 });
 const Cafe = mongoose.model("Cafe", cafeSchema, "cafes");
 

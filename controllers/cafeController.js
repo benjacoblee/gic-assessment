@@ -2,6 +2,7 @@ const { nanoid } = require("nanoid");
 const Cafe = require("../models/cafe");
 const Employee = require("../models/employee");
 const { mapCafeEmployeesToNum } = require("../utils/cafe");
+const uploadImgAndReturnUrl = require("../services/backblazeUploader");
 
 const getCafes = async (req, res) => {
   const { location } = req.query;
@@ -23,6 +24,8 @@ const getCafes = async (req, res) => {
 
 const createCafe = async (req, res) => {
   const { name, description, location } = req.body;
+  const file = req.files[0];
+
   try {
     const cafe = await Cafe.create({
       _id: nanoid(),
@@ -30,6 +33,16 @@ const createCafe = async (req, res) => {
       description,
       location
     });
+
+    if (file) {
+      const url = await uploadImgAndReturnUrl(file);
+
+      if (url) {
+        cafe.logoUrl = url;
+        await cafe.save();
+      }
+    }
+
     return res.status(201).json(cafe);
   } catch (err) {
     console.log(err);
@@ -39,6 +52,7 @@ const createCafe = async (req, res) => {
 
 const updateCafe = async (req, res) => {
   const { _id, name, description, location } = req.body;
+  const file = req.files[0];
 
   try {
     const cafe = await Cafe.findOneAndUpdate(
@@ -46,6 +60,20 @@ const updateCafe = async (req, res) => {
       { name, description, location },
       { new: true }
     );
+
+    if (file) {
+      const url = await uploadImgAndReturnUrl(file);
+      if (url) {
+        const cafe = await Cafe.findOneAndUpdate(
+          { _id },
+          {
+            logoUrl: url
+          }
+        );
+        return res.status(200).json(cafe);
+      }
+    }
+
     return res.status(200).json(cafe);
   } catch (err) {
     console.log(err);
