@@ -40,4 +40,4 @@
 - Then, run `npm start`
 - For logo upload to work, you will need the appropriate environment variables. Run `cp .env.example .env` and add your environment variables.
   - The bucket type must be set to "public"
-  - The application key must have "Read and Write" access
+  - The application key must have "Read and Write" access, and must have access to your bucket
