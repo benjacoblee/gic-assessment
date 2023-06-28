@@ -11,7 +11,7 @@ const upload = multer();
 const cafeController = require("./controllers/cafeController");
 const employeeController = require("./controllers/employeeController");
 
-mongoose.connect("mongodb://127.0.0.1:27017/app").then(
+mongoose.connect(process.env.MONGODB_STR).then(
   () => {
     console.log("DB is ready to use!");
   },
@@ -33,6 +33,8 @@ router
   .put("/employee", employeeController.updateEmployee)
   .delete("/employee", employeeController.deleteEmployee);
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`App started on PORT ${port}`);
 });
+
+module.exports = { server };
